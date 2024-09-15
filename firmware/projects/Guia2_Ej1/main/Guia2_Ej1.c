@@ -50,7 +50,7 @@
 /** @def REFRESCO_EJECUCION
  *  @brief se define el delay para que se muestre la informacion
  */
-#define REFRESCO_EJECUCION 2000
+#define REFRESCO_EJECUCION 500
 /*==================[internal data definition]===============================*/
 /** @def medida
  *  @brief se define la medida obtenida por el sensor
@@ -76,7 +76,7 @@ uint8_t HOLD = 0;
  */
 static void LeerSensor(){
     while (true){
-        medida = HcSr04ReadDistanceInCentimeters();
+        medida = HcSr04ReadDistanceInCentimeters(); 
         vTaskDelay(REFRESCO_LECTURA / portTICK_PERIOD_MS);
     }
 }
@@ -91,17 +91,14 @@ void EncenderLed(){
     }
     if (medida>10 && medida<20){
         LedOn(LED_1);
-        LedOff(LED_2);
-        LedOff(LED_3);
     }
     if (medida>20 && medida<30){
         LedOn(LED_1);
-        LedOn(LED_2); 
-        LedOff(LED_3);
+        LedOn(LED_2);
     } 
     if (medida>30){
         LedOn(LED_1);
-        LedOn(LED_2); 
+        LedOn(LED_2);
         LedOn(LED_3);
     }
 }
@@ -114,11 +111,11 @@ void MostrarPantalla(){
     LcdItsE0803Write(medida);
 }
 
-/** @fn Ejecutar 
+/** @fn Mostrar 
  *  @brief se muestra la medida
  *  @return 0
  */
-static void Ejecutar(void *pvParameter){
+static void Mostrar(void *pvParameter){
     while (true){
         if (tecla1 == ON){
             EncenderLed();
@@ -130,7 +127,6 @@ static void Ejecutar(void *pvParameter){
         if (HOLD == ON){
             EncenderLed();
         }
-        
     vTaskDelay(REFRESCO_EJECUCION/ portTICK_PERIOD_MS);     
     }
 }
@@ -152,17 +148,18 @@ static void PresionarTecla(void *pvParameter){
             tecla1 = OFF;
             break;
         }
+
     vTaskDelay(REFRESCO_TECLA / portTICK_PERIOD_MS);    
     }
 }
 
 /*==================[external functions definition]==========================*/
 void app_main(void){
-    LcdItsE0803Init();  //Iniciar Pantalla
-    HcSr04Init(GPIO_2,GPIO_3); //Inicio Sensor
     LedsInit(); //Iniciar Leds
+    LcdItsE0803Init();  //Iniciar Pantalla
+    HcSr04Init(GPIO_3,GPIO_2); //Inicio Sensor
     SwitchesInit(); //Inicio las teclas
-    xTaskCreate(&Ejecutar, "Ejecutar", 2048, NULL, 5, NULL);
-    xTaskCreate(&PresionarTecla, "PresionarTecla", 512, NULL, 5, NULL);
-    xTaskCreate(&LeerSensor, "LeerSensor", 512, NULL, 5, NULL);
+    xTaskCreate(&PresionarTecla, "PresionarTecla", 2048, NULL, 5, NULL);
+    xTaskCreate(&LeerSensor, "LeerSensor", 2048, NULL, 5, NULL);
+    xTaskCreate(&Mostrar, "Mostrar", 2048, NULL, 5, NULL);
 }
