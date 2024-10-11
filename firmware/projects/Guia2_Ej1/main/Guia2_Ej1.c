@@ -63,7 +63,7 @@ uint8_t tecla = 0;
 /** @def tecla1
  *  @brief se define la condicion de la tecla 1
  */
-uint8_t tecla1 = 0;
+uint8_t teclaO = 0;
 /** @def HOLD
  *  @brief se define el estado de la tecla 2
  */
@@ -117,7 +117,7 @@ void MostrarPantalla(){
  */
 static void Mostrar(void *pvParameter){
     while (true){
-        if (tecla1 == ON){
+        if (teclaO == ON){
             EncenderLed();
             MostrarPantalla();
         }
@@ -140,12 +140,12 @@ static void PresionarTecla(void *pvParameter){
         tecla = SwitchesRead();
         switch (tecla)
         {
-        case (SWITCH_1): tecla1 = ON; 
+        case (SWITCH_1): teclaO = ON; 
             HOLD = 0;
             break;
         
         case (SWITCH_2): HOLD = 1;
-            tecla1 = OFF;
+            teclaO = OFF;
             break;
         }
 

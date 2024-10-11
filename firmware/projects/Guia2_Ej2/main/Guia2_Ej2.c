@@ -20,7 +20,7 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 05/09/2024 | Document creation		                         |
+ * | 19/09/2024 | Document creation		                         |
  *
  * @author Lucas Alarcon (lucasalarcon872@gmail.com)
  *
@@ -36,71 +36,74 @@
 #include "hc_sr04.h"
 #include "lcditse0803.h"
 #include "switch.h"
+#include "timer_mcu.h"
 /*==================[macros and definitions]=================================*/
 #define ON 1
 #define OFF 0
-/** @def REFRESCO_LECTURA
+/** @def TIEMPO_LECTURA
  *  @brief se define el delay para la lectura de la distancia
  */
-#define REFRESCO_LECTURA 1000 
-/** @def REFRESCO_TECLA
- *  @brief se define el delay para la lectura de tecla 
+#define TIEMPO_LECTURA 1000000
+/** @def TIEMPO_MOSTRAR
+ *  @brief se define el delay para mostar la medida por pantalla 
  */
-#define REFRESCO_TECLA 200
-/** @def REFRESCO_EJECUCION
- *  @brief se define el delay para que se muestre la informacion
- */
-#define REFRESCO_MOSTRAR 500
+#define TIEMPO_MOSTRAR 500000
 /*==================[internal data definition]===============================*/
-TaskHandle_t led1_task_handle = NULL;
-TaskHandle_t led2_task_handle = NULL;
-TaskHandle_t led3_task_handle = NULL;
+/** @def lectura_task_handle
+ *  @brief handle de la tarea asociada a la lectura de la medicion
+ */
+TaskHandle_t lectura_task_handle = NULL;
+/** @def mostar_task_handle
+ *  @brief handle de la tarea asociada a la lectura de la tecla
+ */
+TaskHandle_t mostrar_task_handle = NULL;
 /** @def medida
  *  @brief se define la medida obtenida por el sensor
  */
-uint16_t medida = 0;
-/** @def tecla
- *  @brief se define la tecla presionada
- */
-uint8_t tecla = 0;
+uint16_t medida;
 /** @def tecla1
  *  @brief se define la condicion de la tecla 1
  */
 uint8_t tecla1 = 0;
-/** @def HOLD
+/** @def tecla2
  *  @brief se define el estado de la tecla 2
  */
-uint8_t HOLD = 0;
+uint8_t tecla2 = 0;
 /*==================[internal functions declaration]=========================*/
 /**
  * @brief Función invocada en la interrupción del timer A
  */
 void FuncTimerA(void* param){
-    vTaskNotifyGiveFromISR(led1_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_1 */
+    vTaskNotifyGiveFromISR(lectura_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_1 */
 }
 
 /**
  * @brief Función invocada en la interrupción del timer B
  */
 void FuncTimerB(void* param){
-    vTaskNotifyGiveFromISR(led2_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_2 */
+    vTaskNotifyGiveFromISR(mostrar_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_2 */
 }
 
 /**
- * @brief Función invocada en la interrupción del timer B
+ * @brief Función asociado al cambio de la tecla 1
  */
-void FuncTimerC(void* param){
-    vTaskNotifyGiveFromISR(led3_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_2 */
+static void estado_tecla1(){
+    tecla1 =! tecla1;
+}
+/**
+ * @brief Función asociado al cambio de la tecla 1
+ */
+static void estado_tecla2(){
+    tecla2 =! tecla2;
 }
 
 /** @fn LeerSensor 
  *  @brief se lee la medida del sensor
  *  @return 0
  */
-static void LeerSensor(){
-    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
-    
+static void LeerSensor(){    
     while (true){
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
         medida = HcSr04ReadDistanceInCentimeters(); 
     }
 }
@@ -139,10 +142,9 @@ void MostrarPantalla(){
  *  @brief se muestra la medida
  *  @return 0
  */
-static void Mostrar(void *pvParameter){\
-    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
-
+static void Mostrar(void *pvParameter){
     while (true){
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
         if (tecla1 == ON){
             EncenderLed();
             MostrarPantalla();
@@ -150,74 +152,47 @@ static void Mostrar(void *pvParameter){\
         else{
             LedsOffAll();
         }
-        if (HOLD == ON){
+        if (tecla2 == ON){
             EncenderLed();
         }   
     }
 }
 
-/** @fn PresionarTecla
- *  @brief se lee la tecla medida y cambia su condicion 
- *  @return 0
- */
-static void PresionarTecla(void *pvParameter){
-    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
-
-    while (true){
-        tecla = SwitchesRead();
-        switch (tecla)
-        {
-        case (SWITCH_1): tecla1 = ON; 
-            HOLD = 0;
-            break;
-        
-        case (SWITCH_2): HOLD = 1;
-            tecla1 = OFF;
-            break;
-        }
-   
-    }
-}
 
 /*==================[external functions definition]==========================*/
 void app_main(void){
-
-    /* Inicialización de timers */
-    timer_config_t timer_lectura = {
-        .timer = TIMER_A,
-        .period = REFRESCO_LECTURA,
-        .func_p = FuncTimerA,
-        .param_p = NULL
-    };
-    TimerInit(&timer_lectura);
-
-    timer_config_t timer_tecla = {
-        .timer = TIMER_B,
-        .period = REFRESCO_TECLA,
-        .func_p = FuncTimerB,
-        .param_p = NULL
-    };
-    TimerInit(&timer_tecla);
-
-    timer_config_t timer_mostrar = {
-        .timer = TIMER_C,
-        .period = REFRESCO_MOSTRAR,
-        .func_p = FuncTimerC,
-        .param_p = NULL
-    };
-    TimerInit(&timer_mostrar);
-
     LedsInit(); //Iniciar Leds
     LcdItsE0803Init();  //Iniciar Pantalla
     HcSr04Init(GPIO_3,GPIO_2); //Inicio Sensor
     SwitchesInit(); //Inicio las teclas
 
-    xTaskCreate(&PresionarTecla, "PresionarTecla", 2048, NULL, 5, NULL);
-    xTaskCreate(&LeerSensor, "LeerSensor", 2048, NULL, 5, NULL);
-    xTaskCreate(&Mostrar, "Mostar", 2048, NULL, 5, NULL);
+    /* Inicialización de timers */
+    timer_config_t timer_lectura = {
+        .timer = TIMER_A,
+        .period = TIEMPO_LECTURA,
+        .func_p = FuncTimerA,
+        .param_p = NULL
+    };
+    TimerInit(&timer_lectura);
 
+    timer_config_t timer_mostrar = {
+        .timer = TIMER_B,
+        .period = TIEMPO_MOSTRAR,
+        .func_p = FuncTimerB,
+        .param_p = NULL
+    };
+    TimerInit(&timer_mostrar);
+
+    /* Creación de tareas */
+    xTaskCreate(&LeerSensor, "LeerSensor", 2048, NULL, 5, &lectura_task_handle);
+    xTaskCreate(&Mostrar, "Mostrar", 2048, NULL, 5, &mostrar_task_handle);
+
+    /* se analiza si se presiona una tecla */
+    SwitchActivInt(SWITCH_1, *estado_tecla1, NULL);
+    SwitchActivInt(SWITCH_2, *estado_tecla2, NULL);
+  
     /* Inicialización del conteo de timers */
     TimerStart(timer_lectura.timer);
-    TimerStart(timer_tecla.timer);
-    TimerStart(timer_mostar.timer);
+    TimerStart(timer_mostrar.timer);
+
 }
