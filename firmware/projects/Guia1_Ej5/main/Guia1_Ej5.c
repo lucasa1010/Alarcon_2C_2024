@@ -2,7 +2,8 @@
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * Escribir una función que reciba como parámetro un dígito BCD 
+ * y un vector de estructuras del tipo gpioConf_t. 
  *
  * <a href="https://drive.google.com/...">Operation Example</a>
  *
@@ -43,16 +44,16 @@ typedef struct
 void convertbcdtopin(uint8_t bcd, gpioConf_t *vector){
 	uint8_t mascara=1;
 	for(int i=0;i<4;i++){
-		GPIOInit(vector[i].pin,vector[i].dir);
+		GPIOInit(vector[i].pin,vector[i].dir);   //se configuran los pines (paso necesario)
 	}
 	for(int i=0; i<4;i++){
-		if((mascara & bcd) != 0){
-			GPIOOn(vector[i].pin);
+		if((mascara & bcd) != 0){   //verifica si el pin esta encendido
+			GPIOOn(vector[i].pin); //prendo el gpio
 		}
 		else{
-			GPIOOff(vector[i].pin);
+			GPIOOff(vector[i].pin); //apago el gpio
 		}
-		mascara=mascara<<1;	
+		mascara=mascara<<1;	//se realiza un desplazamiento a la izquierda para analizar el siguiente bit
 	}
 }
 
@@ -61,7 +62,7 @@ void convertbcdtopin(uint8_t bcd, gpioConf_t *vector){
 /*==================[external functions definition]==========================*/
 void app_main(void){
 	uint8_t numero = 2;
-	gpioConf_t pines [4] = {{GPIO_20,GPIO_OUTPUT},{GPIO_21,GPIO_OUTPUT},{GPIO_22,GPIO_OUTPUT},{GPIO_23,GPIO_OUTPUT}};
+	gpioConf_t pines [4] = {{GPIO_20,GPIO_OUTPUT},{GPIO_21,GPIO_OUTPUT},{GPIO_22,GPIO_OUTPUT},{GPIO_23,GPIO_OUTPUT}}; //se configuran los pines a usar
 	convertbcdtopin(numero, pines);
 }
 /*==================[end of file]============================================*/

@@ -115,10 +115,10 @@ void FuncTimerB(void* param){
  */
 static void ConversionAD(void *pvParameter){
     while (true){
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
-        AnalogInputReadSingle(CH1, &voltaje);
-		UartSendString(UART_PC, (char*)UartItoa(voltaje, 10));
-		UartSendString(UART_PC, "\r\n");
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
+        AnalogInputReadSingle(CH1, &voltaje);  //se lee el voltaje en chanel 1 y se almacena 
+		UartSendString(UART_PC, (char*)UartItoa(voltaje, 10)); //se envia la cadena 
+		UartSendString(UART_PC, "\r\n"); //marcar el final de la transmision.
     }
 }
 
@@ -129,7 +129,7 @@ static void ConversionAD(void *pvParameter){
 static void enviarDatos(void *pvParameter){
 	while(true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
-		AnalogOutputWrite(ecg[cuentas_ECG]);
+		AnalogOutputWrite(ecg[cuentas_ECG]); //escribe el valor actual del buffer ecg en la salida analogica
 		if(cuentas_ECG<(BUFFER_SIZE-1))
 			cuentas_ECG++;
 		else
@@ -164,7 +164,7 @@ void app_main(void){
     };
     TimerInit(&timer_ecg);
 
-    serial_config_t my_uart = {
+    serial_config_t my_uart = {   //configuracion del UART
     .port = UART_PC,
     .baud_rate = 57600,
     .func_p = NULL,
@@ -181,7 +181,7 @@ void app_main(void){
     TimerStart(timer_lectura.timer);
     TimerStart(timer_ecg.timer);
 
-	serial_config_t puertoSerie = {
+	serial_config_t puertoSerie = {  //configuracion del puerto serie
 		.port = UART_PC,
 		.baud_rate = 115200,
 		.func_p = NULL,

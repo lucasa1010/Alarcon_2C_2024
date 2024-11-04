@@ -76,7 +76,7 @@ uint8_t HOLD = 0;
  */
 static void LeerSensor(){
     while (true){
-        medida = HcSr04ReadDistanceInCentimeters(); 
+        medida = HcSr04ReadDistanceInCentimeters(); //tomo la medida
         vTaskDelay(REFRESCO_LECTURA / portTICK_PERIOD_MS);
     }
 }
@@ -108,7 +108,7 @@ void EncenderLed(){
  *  @return 0
  */
 void MostrarPantalla(){
-    LcdItsE0803Write(medida);
+    LcdItsE0803Write(medida); //escribo la medida
 }
 
 /** @fn Mostrar 

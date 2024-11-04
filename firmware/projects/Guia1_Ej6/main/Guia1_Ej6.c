@@ -73,7 +73,7 @@ gpioConf_t mux [3] = {{GPIO_19,GPIO_OUTPUT},{GPIO_18,GPIO_OUTPUT},{GPIO_9,GPIO_O
 int8_t  convertToBcdArray (uint32_t data, uint8_t digits, uint8_t * bcd_number)
 {
 	for(int i=0; i<digits;i++){
-		bcd_number[digits-1-i]=data%10;
+		bcd_number[digits-1-i]=data%10;  //convierto el numero a un vector ordenado 
 		data=data/10;
 	}
 return 1;
@@ -111,13 +111,13 @@ void convertbcdtopin(uint8_t bcd, gpioConf_t *vector){
  */
 void convertbcdtolcd(uint32_t numero, uint8_t digitos,gpioConf_t *pins, gpioConf_t *mux){
 	uint8_t vec[3];
-	convertToBcdArray(numero, digitos, vec);
+	convertToBcdArray(numero, digitos, vec);  //obtengo el numero por partes
 	for(uint8_t i=0; i<digitos; i++){
-		GPIOInit(mux[i].pin, mux[i].dir); 
+		GPIOInit(mux[i].pin, mux[i].dir);   //inicio los gpio
 	}
 	for(uint8_t i=0; i<digitos; i++){
-		convertbcdtopin(vec[i], pins);
-		GPIOOn(mux[i].pin);
+		convertbcdtopin(vec[i], pins); //convierto un solo numero a pin 
+		GPIOOn(mux[i].pin); //mando ese numero al 7 segmetnos correspondiente
 		GPIOOff(mux[i].pin);
 	}
 }
