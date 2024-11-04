@@ -62,27 +62,64 @@ TaskHandle_t medicion_task_handle = NULL;
 /** @def acelerometro_task_handle
  *  @brief handle de la tarea asociada al acelerometro
  */
-TaskHandle_t acelerometro_task_handle = NULL;
-
+TaskHandle_t acelerometrox_task_handle = NULL;
+/** @def acelerometro_task_handle
+ *  @brief handle de la tarea asociada al acelerometro
+ */
+TaskHandle_t acelerometroy_task_handle = NULL;
+/** @def acelerometro_task_handle
+ *  @brief handle de la tarea asociada al acelerometro
+ */
+TaskHandle_t acelerometroz_task_handle = NULL;
+/** @def alertar_task_handle
+ *  @brief handle de la tarea alertar
+ */
+TaskHandle_t alertar_task_handle = NULL;
 uint16_t distancia = 0;
 /** @def voltaje
  *  @brief es el voltaje asociado a la medicion
  */
-uint16_t voltaje = 0;
+uint16_t voltajex = 0;
+/** @def voltaje
+ *  @brief es el voltaje asociado a la medicion
+ */
+uint16_t voltajey = 0;
+/** @def voltaje
+ *  @brief es el voltaje asociado a la medicion
+ */
+uint16_t voltajez = 0;
+/** @def gravedad
+ *  @brief es el valor de la gravedad 
+ */
 uint16_t gravedad = 0;
+/** @def gravedad
+ *  @brief es el valor de la gravedad en x
+ */
+uint16_t gravedadx = 0;
+/** @def gravedad
+ *  @brief es el valor de la gravedad en y
+ */
+uint16_t gravedady = 0;
+/** @def gravedad
+ *  @brief es el valor de la gravedad en z
+ */
+uint16_t gravedadz = 0;
 /*==================[internal functions declaration]=========================*/
 /**
  * @brief Función invocada en la interrupción del timer A
  */
 void FuncTimerA(void* param){
-    vTaskNotifyGiveFromISR(medicion_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_1 */
+    vTaskNotifyGiveFromISR(medicion_task_handle, pdFALSE);   
+	vTaskNotifyGiveFromISR(alertar_task_handle, pdFALSE);    
 }
 
 /**
  * @brief Función invocada en la interrupción del timer B
  */
 void FuncTimerB(void* param){
-    vTaskNotifyGiveFromISR(acelerometro_task_handle, pdFALSE); 
+    vTaskNotifyGiveFromISR(acelerometrox_task_handle, pdFALSE);
+	vTaskNotifyGiveFromISR(acelerometroy_task_handle, pdFALSE); 
+	vTaskNotifyGiveFromISR(acelerometroz_task_handle, pdFALSE);  
 }
 
 /** @fn LeerSensor 
@@ -144,21 +181,59 @@ void alertaBlueetoth () {
 	UartSendString(UART_CONNECTOR,"r\n");
 	}  
 }
-
 /**
  * @brief Función que convierte datos analogicos a digital
- * @param pvParameter parametro interno
  */
-static void ConversionAD(void *pvParameter){
+static void ConversionADx(){
     while (true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
-        AnalogInputReadSingle(CH1, &voltaje);  //se lee el voltaje en chanel 1 y se almacena 
-		gravedad = 1.65 + 0.3*voltaje; //obtengo la gravedad medida por el acelerometro
+        AnalogInputReadSingle(CH1, &voltajex);  //se lee el voltaje en chanel 1 y se almacena
+	}
+}
+/**
+ * @brief Función que convierte datos analogicos a digital
+ */
+static void ConversionADy(){
+    while (true){
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
+        AnalogInputReadSingle(CH2, &voltajey);  //se lee el voltaje en chanel 1 y se almacena
+	}
+}
+/**
+ * @brief Función que convierte datos analogicos a digital
+ */
+static void ConversionADz(){
+    while (true){
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
+        AnalogInputReadSingle(CH3, &voltajez);  //se lee el voltaje en chanel 1 y se almacena
+	}
+}
+
+/**
+ * @brief Función que obtiene la gravedad a partir de los distintos valores
+ */
+static void obtenergravedad(){
+	while (true){
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
+		gravedadx = voltajex*3.33; //obtengo la gravedad medida por el acelerometro en x
+		gravedady = voltajey*3.33; //obtengo la gravedad medida por el acelerometro en y
+		gravedadz = voltajez*3.33; //obtengo la gravedad medida por el acelerometro en z
+		gravedad = gravedadx+gravedady+gravedadz;
 		if(gravedad>4){
 			UartSendString(UART_PC,"Caída detectada");
 	 		UartSendString(UART_PC,"r\n");
 		}
-    }
+	}
+} 
+
+
+static void alertarCiclistas(){
+	while (true){
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
+		EncenderLed();
+		manejoBuzzer();
+		alertaBlueetoth();
+	}
 }
 
 /*==================[external functions definition]==========================*/
@@ -167,6 +242,26 @@ void app_main(void){
     LcdItsE0803Init();  //Iniciar Pantalla
     HcSr04Init(GPIO_3,GPIO_2); //Inicio Sensor
 	BuzzerInit(GPIO_2); //Inicio de Buzzer
+
+	analog_input_config_t conversorADx = {
+        .input = CH1,
+        .mode = ADC_SINGLE,
+    };
+    AnalogInputInit(&conversorADx);
+
+	analog_input_config_t conversorADy = {
+        .input = CH2,
+        .mode = ADC_SINGLE,
+    };
+    AnalogInputInit(&conversorADy);
+
+	analog_input_config_t conversorADz = {
+        .input = CH1,
+        .mode = ADC_SINGLE,
+    };
+    AnalogInputInit(&conversorADz);
+
+    AnalogOutputInit();
 
 	serial_config_t my_uart = {  //Incializo la uart
     .port = UART_PC,
@@ -199,10 +294,12 @@ void app_main(void){
     };
     TimerInit(&timer_acelerometro);
 
-
     /* Creación de tareas */
     xTaskCreate(&obtenerDistancia, "obtener Distancia", 2048, NULL, 5, &medicion_task_handle);
-
+	xTaskCreate(&ConversionADx, "ConversionADx", 2048, NULL, 5, &acelerometrox_task_handle);
+	xTaskCreate(&ConversionADx, "ConversionADy", 2048, NULL, 5, &acelerometroy_task_handle);
+	xTaskCreate(&ConversionADx, "ConversionADz", 2048, NULL, 5, &acelerometroz_task_handle);
+	xTaskCreate(&alertarCiclistas, "alertar Ciclistas", 2048, NULL, 5, &alertar_task_handle);
   
     /* Inicialización del conteo de timers */
     TimerStart(timer_lectura.timer);
