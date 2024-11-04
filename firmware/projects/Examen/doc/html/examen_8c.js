@@ -1,0 +1,26 @@
+var examen_8c =
+[
+    [ "TIEMPO_ACELEROMETRO", "examen_8c.html#a32c55832e8056d2a2f4b3fed13439373", null ],
+    [ "TIEMPO_MEDICION", "examen_8c.html#a6a6dc95d5c3391209c3dd27a03348971", null ],
+    [ "alertaBlueetoth", "examen_8c.html#a4eefdaa615215acb939df484ed57790f", null ],
+    [ "app_main", "examen_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70", null ],
+    [ "EncenderLed", "examen_8c.html#a9637f9f2a674e98e432b00b3ce5a892d", null ],
+    [ "FuncTimerA", "examen_8c.html#afaccfed84cd1498a05ea04a65f1209b1", null ],
+    [ "FuncTimerB", "examen_8c.html#a5088c3325764095ca222dc78c328f466", null ],
+    [ "manejoBuzzer", "examen_8c.html#a9758631906abed018de761de5a8e5ea7", null ],
+    [ "obtenergravedad", "examen_8c.html#ad3a0fca12de57f35397eeca3969f11b5", null ],
+    [ "acelerometro_task_handle", "examen_8c.html#a3466cd0e43837d57ca5c523cb468f0f2", null ],
+    [ "acelerometrox_task_handle", "examen_8c.html#ab00d82d61bccdf27c74ee8a0b83e371d", null ],
+    [ "acelerometroy_task_handle", "examen_8c.html#afad0c92287fea0f10656b04a6356ddb5", null ],
+    [ "acelerometroz_task_handle", "examen_8c.html#a286d4b4d924c0ef0b1ad8b8eae887e00", null ],
+    [ "alertar_task_handle", "examen_8c.html#a938eaf789fb77c0c81f6f85f7f1919d6", null ],
+    [ "distancia", "examen_8c.html#aec40b15ff3098bdb2425eb4dc9c11a18", null ],
+    [ "gravedad", "examen_8c.html#a9e3cedafbf8c7bc3773f2810c3e05a34", null ],
+    [ "gravedadx", "examen_8c.html#af396a058cc4330ccd2b1baf7a3016245", null ],
+    [ "gravedady", "examen_8c.html#a44b28cac739f778c3909a697fa594e22", null ],
+    [ "gravedadz", "examen_8c.html#a5751ff9cfea083505574d84215f01cb5", null ],
+    [ "medicion_task_handle", "examen_8c.html#ac49675773e8afdad9d8f3691a8abcf6a", null ],
+    [ "voltajex", "examen_8c.html#ad2513c1c455281e77d2b755eeabe48c4", null ],
+    [ "voltajey", "examen_8c.html#a6adad3b20c6c7592457a87c2aaf5b726", null ],
+    [ "voltajez", "examen_8c.html#af8cabf1598993fa642ad412bf2e66fef", null ]
+];

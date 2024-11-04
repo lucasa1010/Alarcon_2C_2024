@@ -2,8 +2,8 @@
  *
  * @section genDesc General Description
  *
- * Se pretende diseñar un dispositivo basado en la ESP-EDU que permita detectar
- * eventos peligrosos para ciclistas.
+ * Se disena un dispsitivo que alerta via LEDs, buzzers y notificaciones cuando un 
+ * objeto se esta acercando. Ademas tambien alerta si se sufrio una caida
  *
  * <a href="https://drive.google.com/...">Operation Example</a>
  *
@@ -11,16 +11,19 @@
  *
  * |    Peripheral  |   ESP32   	|
  * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
+ * | 	ECHO       	| 	GPIO_3		|
+ * | 	TRIGGER	 	| 	GPIO_2		|
+ * | 	+5V 	 	| 	+5V   		|
+ * | 	GND 	 	| 	GND 		|
  *
  *
  * @section changelog Changelog
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 12/09/2023 | Document creation		                         |
+ * | 04/11/2023 | Document creation		                         |
  *
- * @author Albano Peñalva (albano.penalva@uner.edu.ar)
+ * @author Alarcon Lucas
  *
  */
 
@@ -49,7 +52,7 @@
 /** @def TIEMPO_ACELEROMETRO
  *  @brief se define el tiempo para obtener datos del acelerometro
  */
-#define TIEMPO_ACELEROMETRO 10000
+#define TIEMPO_ACELEROMETRO 10000  //100 hz en us
 
 /*==================[internal data definition]===============================*/
 /** @def medicion_task_handle
@@ -71,6 +74,10 @@ TaskHandle_t acelerometroy_task_handle = NULL;
  *  @brief handle de la tarea asociada al acelerometro
  */
 TaskHandle_t acelerometroz_task_handle = NULL;
+/** @def acelerometro_task_handle
+ *  @brief handle de la tarea asociada al acelerometro
+ */
+TaskHandle_t acelerometro_task_handle = NULL;
 /** @def alertar_task_handle
  *  @brief handle de la tarea alertar
  */
@@ -112,21 +119,20 @@ void FuncTimerA(void* param){
     vTaskNotifyGiveFromISR(medicion_task_handle, pdFALSE);   
 	vTaskNotifyGiveFromISR(alertar_task_handle, pdFALSE);    
 }
-
 /**
  * @brief Función invocada en la interrupción del timer B
  */
 void FuncTimerB(void* param){
     vTaskNotifyGiveFromISR(acelerometrox_task_handle, pdFALSE);
 	vTaskNotifyGiveFromISR(acelerometroy_task_handle, pdFALSE); 
-	vTaskNotifyGiveFromISR(acelerometroz_task_handle, pdFALSE);  
+	vTaskNotifyGiveFromISR(acelerometroz_task_handle, pdFALSE); 
+	vTaskNotifyGiveFromISR(acelerometro_task_handle, pdFALSE);   
 }
-
-/** @fn LeerSensor 
- *  @brief se lee la medida del sensor
+/** @fn obtenerDistancia 
+ *  @brief se lee la distancia del sensor
  *  @return 0
  */
-static void obtenerDistancia(){    
+static void obtenerDistancia(void *pvParameter){    
     while (true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificación */
         distancia = HcSr04ReadDistanceInCentimeters(); 
@@ -151,7 +157,10 @@ void EncenderLed(){
         LedOn(LED_1);  //se prende el LED verde si la distancia es mayor a 5 metros
     }
 }
-
+/** @fn manejoBuzzer
+ *  @brief se prenden el buzzer de un tono u otro dependiendo la distancia
+ *  @return 0
+ */
 void manejoBuzzer(){  //La alarma sonará con una frecuencia de 1 segundo en el caso de precaución y cada 0.5 segundos en el caso de peligro.
     if (distancia<300){
 		BuzzerSetFrec(0.5);  //seteo la frecuencia para peligro
@@ -166,9 +175,8 @@ void manejoBuzzer(){  //La alarma sonará con una frecuencia de 1 segundo en el 
     }
 }
 
-/** @fn UartTask 
- *  @brief se muestra la lectura por el puerto serie
- *  @param pvParameter numero que se recibe para mostrar
+/** @fn alertaBlueetoth 
+ *  @brief se alerta via app dependiendo la distancia de un objeto
  *  @return 0
  */
 void alertaBlueetoth () {
@@ -181,38 +189,38 @@ void alertaBlueetoth () {
 	UartSendString(UART_CONNECTOR,"r\n");
 	}  
 }
-/**
+/** @fn ConversionADx 
  * @brief Función que convierte datos analogicos a digital
  */
-static void ConversionADx(){
+static void ConversionADx(void *pvParameter){
     while (true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
         AnalogInputReadSingle(CH1, &voltajex);  //se lee el voltaje en chanel 1 y se almacena
 	}
 }
-/**
+/** @fn ConversionADy 
  * @brief Función que convierte datos analogicos a digital
  */
-static void ConversionADy(){
+static void ConversionADy(void *pvParameter){
     while (true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
         AnalogInputReadSingle(CH2, &voltajey);  //se lee el voltaje en chanel 1 y se almacena
 	}
 }
-/**
+/** @fn ConversionADz 
  * @brief Función que convierte datos analogicos a digital
  */
-static void ConversionADz(){
+static void ConversionADz(void *pvParameter){
     while (true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
         AnalogInputReadSingle(CH3, &voltajez);  //se lee el voltaje en chanel 1 y se almacena
 	}
 }
 
-/**
- * @brief Función que obtiene la gravedad a partir de los distintos valores
+/** @fn obtenergravedad
+ *  @brief Función que obtiene la gravedad a partir de los distintos valores
  */
-static void obtenergravedad(){
+void obtenergravedad(){
 	while (true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
 		gravedadx = voltajex*3.33; //obtengo la gravedad medida por el acelerometro en x
@@ -226,8 +234,10 @@ static void obtenergravedad(){
 	}
 } 
 
-
-static void alertarCiclistas(){
+/** @fn alertarCiclistas
+ *  @brief Función que ejecuta todas las funciones para alertar al ciclista
+ */
+static void alertarCiclistas(void *pvParameter){
 	while (true){
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
 		EncenderLed();
@@ -256,7 +266,7 @@ void app_main(void){
     AnalogInputInit(&conversorADy);
 
 	analog_input_config_t conversorADz = {
-        .input = CH1,
+        .input = CH3,
         .mode = ADC_SINGLE,
     };
     AnalogInputInit(&conversorADz);
@@ -297,8 +307,9 @@ void app_main(void){
     /* Creación de tareas */
     xTaskCreate(&obtenerDistancia, "obtener Distancia", 2048, NULL, 5, &medicion_task_handle);
 	xTaskCreate(&ConversionADx, "ConversionADx", 2048, NULL, 5, &acelerometrox_task_handle);
-	xTaskCreate(&ConversionADx, "ConversionADy", 2048, NULL, 5, &acelerometroy_task_handle);
-	xTaskCreate(&ConversionADx, "ConversionADz", 2048, NULL, 5, &acelerometroz_task_handle);
+	xTaskCreate(&ConversionADy, "ConversionADy", 2048, NULL, 5, &acelerometroy_task_handle);
+	xTaskCreate(&ConversionADz, "ConversionADz", 2048, NULL, 5, &acelerometroz_task_handle);
+	xTaskCreate(&obtenergravedad, "obtenerGravedad", 2048, NULL, 5, &acelerometro_task_handle);
 	xTaskCreate(&alertarCiclistas, "alertar Ciclistas", 2048, NULL, 5, &alertar_task_handle);
   
     /* Inicialización del conteo de timers */

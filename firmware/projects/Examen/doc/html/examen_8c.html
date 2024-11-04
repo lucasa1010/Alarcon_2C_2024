@@ -1,0 +1,666 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.11.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Examen parcial: Referencia del archivo C:/Repositorios/Alarcon_2C_2024/firmware/projects/Examen/main/examen.c</title>
+<link rel="icon" href="icon.ico" type="image/x-icon" />
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="fiuner.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Examen parcial<span id="projectnumber">&#160;1.0</span>
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.11.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('examen_8c.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo examen.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="led_8h_source.html">led.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="hc__sr04_8h_source.html">hc_sr04.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lcditse0803_8h_source.html">lcditse0803.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="switch_8h_source.html">switch.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="timer__mcu_8h_source.html">timer_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="buzzer_8h_source.html">buzzer.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="uart__mcu_8h_source.html">uart_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="analog__io__mcu_8h_source.html">analog_io_mcu.h</a>&quot;</code><br />
+</div>
+<p><a href="examen_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a6a6dc95d5c3391209c3dd27a03348971" id="r_a6a6dc95d5c3391209c3dd27a03348971"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a6dc95d5c3391209c3dd27a03348971">TIEMPO_MEDICION</a>&#160;&#160;&#160;50000</td></tr>
+<tr class="memdesc:a6a6dc95d5c3391209c3dd27a03348971"><td class="mdescLeft">&#160;</td><td class="mdescRight">se define el delay para la lectura de la distancia  <br /></td></tr>
+<tr class="separator:a6a6dc95d5c3391209c3dd27a03348971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32c55832e8056d2a2f4b3fed13439373" id="r_a32c55832e8056d2a2f4b3fed13439373"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32c55832e8056d2a2f4b3fed13439373">TIEMPO_ACELEROMETRO</a>&#160;&#160;&#160;10000</td></tr>
+<tr class="memdesc:a32c55832e8056d2a2f4b3fed13439373"><td class="mdescLeft">&#160;</td><td class="mdescRight">se define el tiempo para obtener datos del acelerometro  <br /></td></tr>
+<tr class="separator:a32c55832e8056d2a2f4b3fed13439373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:afaccfed84cd1498a05ea04a65f1209b1" id="r_afaccfed84cd1498a05ea04a65f1209b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afaccfed84cd1498a05ea04a65f1209b1">FuncTimerA</a> (void *param)</td></tr>
+<tr class="memdesc:afaccfed84cd1498a05ea04a65f1209b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función invocada en la interrupción del timer A.  <br /></td></tr>
+<tr class="separator:afaccfed84cd1498a05ea04a65f1209b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5088c3325764095ca222dc78c328f466" id="r_a5088c3325764095ca222dc78c328f466"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5088c3325764095ca222dc78c328f466">FuncTimerB</a> (void *param)</td></tr>
+<tr class="memdesc:a5088c3325764095ca222dc78c328f466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función invocada en la interrupción del timer B.  <br /></td></tr>
+<tr class="separator:a5088c3325764095ca222dc78c328f466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9637f9f2a674e98e432b00b3ce5a892d" id="r_a9637f9f2a674e98e432b00b3ce5a892d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9637f9f2a674e98e432b00b3ce5a892d">EncenderLed</a> ()</td></tr>
+<tr class="memdesc:a9637f9f2a674e98e432b00b3ce5a892d"><td class="mdescLeft">&#160;</td><td class="mdescRight">se prenden los Leds dependiendo la distancia  <br /></td></tr>
+<tr class="separator:a9637f9f2a674e98e432b00b3ce5a892d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9758631906abed018de761de5a8e5ea7" id="r_a9758631906abed018de761de5a8e5ea7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9758631906abed018de761de5a8e5ea7">manejoBuzzer</a> ()</td></tr>
+<tr class="memdesc:a9758631906abed018de761de5a8e5ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">se prenden el buzzer de un tono u otro dependiendo la distancia  <br /></td></tr>
+<tr class="separator:a9758631906abed018de761de5a8e5ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eefdaa615215acb939df484ed57790f" id="r_a4eefdaa615215acb939df484ed57790f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4eefdaa615215acb939df484ed57790f">alertaBlueetoth</a> ()</td></tr>
+<tr class="memdesc:a4eefdaa615215acb939df484ed57790f"><td class="mdescLeft">&#160;</td><td class="mdescRight">se alerta via app dependiendo la distancia de un objeto  <br /></td></tr>
+<tr class="separator:a4eefdaa615215acb939df484ed57790f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3a0fca12de57f35397eeca3969f11b5" id="r_ad3a0fca12de57f35397eeca3969f11b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3a0fca12de57f35397eeca3969f11b5">obtenergravedad</a> ()</td></tr>
+<tr class="memdesc:ad3a0fca12de57f35397eeca3969f11b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función que obtiene la gravedad a partir de los distintos valores.  <br /></td></tr>
+<tr class="separator:ad3a0fca12de57f35397eeca3969f11b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630544a7f0a2cc40d8a7fefab7e2fe70" id="r_a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a630544a7f0a2cc40d8a7fefab7e2fe70">app_main</a> (void)</td></tr>
+<tr class="separator:a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac49675773e8afdad9d8f3691a8abcf6a" id="r_ac49675773e8afdad9d8f3691a8abcf6a"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac49675773e8afdad9d8f3691a8abcf6a">medicion_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="separator:ac49675773e8afdad9d8f3691a8abcf6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab00d82d61bccdf27c74ee8a0b83e371d" id="r_ab00d82d61bccdf27c74ee8a0b83e371d"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab00d82d61bccdf27c74ee8a0b83e371d">acelerometrox_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="separator:ab00d82d61bccdf27c74ee8a0b83e371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afad0c92287fea0f10656b04a6356ddb5" id="r_afad0c92287fea0f10656b04a6356ddb5"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afad0c92287fea0f10656b04a6356ddb5">acelerometroy_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="separator:afad0c92287fea0f10656b04a6356ddb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a286d4b4d924c0ef0b1ad8b8eae887e00" id="r_a286d4b4d924c0ef0b1ad8b8eae887e00"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a286d4b4d924c0ef0b1ad8b8eae887e00">acelerometroz_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="separator:a286d4b4d924c0ef0b1ad8b8eae887e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3466cd0e43837d57ca5c523cb468f0f2" id="r_a3466cd0e43837d57ca5c523cb468f0f2"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3466cd0e43837d57ca5c523cb468f0f2">acelerometro_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="separator:a3466cd0e43837d57ca5c523cb468f0f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a938eaf789fb77c0c81f6f85f7f1919d6" id="r_a938eaf789fb77c0c81f6f85f7f1919d6"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938eaf789fb77c0c81f6f85f7f1919d6">alertar_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="separator:a938eaf789fb77c0c81f6f85f7f1919d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec40b15ff3098bdb2425eb4dc9c11a18" id="r_aec40b15ff3098bdb2425eb4dc9c11a18"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec40b15ff3098bdb2425eb4dc9c11a18">distancia</a> = 0</td></tr>
+<tr class="separator:aec40b15ff3098bdb2425eb4dc9c11a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2513c1c455281e77d2b755eeabe48c4" id="r_ad2513c1c455281e77d2b755eeabe48c4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2513c1c455281e77d2b755eeabe48c4">voltajex</a> = 0</td></tr>
+<tr class="separator:ad2513c1c455281e77d2b755eeabe48c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6adad3b20c6c7592457a87c2aaf5b726" id="r_a6adad3b20c6c7592457a87c2aaf5b726"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6adad3b20c6c7592457a87c2aaf5b726">voltajey</a> = 0</td></tr>
+<tr class="separator:a6adad3b20c6c7592457a87c2aaf5b726"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8cabf1598993fa642ad412bf2e66fef" id="r_af8cabf1598993fa642ad412bf2e66fef"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8cabf1598993fa642ad412bf2e66fef">voltajez</a> = 0</td></tr>
+<tr class="separator:af8cabf1598993fa642ad412bf2e66fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3cedafbf8c7bc3773f2810c3e05a34" id="r_a9e3cedafbf8c7bc3773f2810c3e05a34"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e3cedafbf8c7bc3773f2810c3e05a34">gravedad</a> = 0</td></tr>
+<tr class="separator:a9e3cedafbf8c7bc3773f2810c3e05a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af396a058cc4330ccd2b1baf7a3016245" id="r_af396a058cc4330ccd2b1baf7a3016245"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af396a058cc4330ccd2b1baf7a3016245">gravedadx</a> = 0</td></tr>
+<tr class="separator:af396a058cc4330ccd2b1baf7a3016245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44b28cac739f778c3909a697fa594e22" id="r_a44b28cac739f778c3909a697fa594e22"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44b28cac739f778c3909a697fa594e22">gravedady</a> = 0</td></tr>
+<tr class="separator:a44b28cac739f778c3909a697fa594e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5751ff9cfea083505574d84215f01cb5" id="r_a5751ff9cfea083505574d84215f01cb5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5751ff9cfea083505574d84215f01cb5">gravedadz</a> = 0</td></tr>
+<tr class="separator:a5751ff9cfea083505574d84215f01cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentación de «define»</h2>
+<a id="a32c55832e8056d2a2f4b3fed13439373" name="a32c55832e8056d2a2f4b3fed13439373"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32c55832e8056d2a2f4b3fed13439373">&#9670;&#160;</a></span>TIEMPO_ACELEROMETRO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TIEMPO_ACELEROMETRO&#160;&#160;&#160;10000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>se define el tiempo para obtener datos del acelerometro </p>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00055">55</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a6a6dc95d5c3391209c3dd27a03348971" name="a6a6dc95d5c3391209c3dd27a03348971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a6dc95d5c3391209c3dd27a03348971">&#9670;&#160;</a></span>TIEMPO_MEDICION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TIEMPO_MEDICION&#160;&#160;&#160;50000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>se define el delay para la lectura de la distancia </p>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00050">50</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones</h2>
+<a id="a4eefdaa615215acb939df484ed57790f" name="a4eefdaa615215acb939df484ed57790f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eefdaa615215acb939df484ed57790f">&#9670;&#160;</a></span>alertaBlueetoth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alertaBlueetoth </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>se alerta via app dependiendo la distancia de un objeto </p>
+<dl class="section return"><dt>Devuelve</dt><dd>0 </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00182">182</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="examen_8c_source.html#l00085">distancia</a>, <a class="el" href="uart__mcu_8h_source.html#l00033">UART_CONNECTOR</a> y <a class="el" href="uart__mcu_8c_source.html#l00193">UartSendString()</a>.</p>
+
+</div>
+</div>
+<a id="a630544a7f0a2cc40d8a7fefab7e2fe70" name="a630544a7f0a2cc40d8a7fefab7e2fe70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630544a7f0a2cc40d8a7fefab7e2fe70">&#9670;&#160;</a></span>app_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_main </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00250">250</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="examen_8c_source.html#l00080">acelerometro_task_handle</a>, <a class="el" href="examen_8c_source.html#l00068">acelerometrox_task_handle</a>, <a class="el" href="examen_8c_source.html#l00072">acelerometroy_task_handle</a>, <a class="el" href="examen_8c_source.html#l00076">acelerometroz_task_handle</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00038">ADC_SINGLE</a>, <a class="el" href="examen_8c_source.html#l00084">alertar_task_handle</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00045">AnalogInputInit()</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00120">AnalogOutputInit()</a>, <a class="el" href="buzzer_8c_source.html#l00043">BuzzerInit()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00032">CH1</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00033">CH2</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00034">CH3</a>, <a class="el" href="examen_8c_source.html#l00118">FuncTimerA()</a>, <a class="el" href="examen_8c_source.html#l00125">FuncTimerB()</a>, <a class="el" href="gpio__mcu_8h_source.html#l00054">GPIO_2</a>, <a class="el" href="gpio__mcu_8h_source.html#l00055">GPIO_3</a>, <a class="el" href="hc__sr04_8c_source.html#l00034">HcSr04Init()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00049">analog_input_config_t::input</a>, <a class="el" href="lcditse0803_8c_source.html#l00037">LcdItsE0803Init()</a>, <a class="el" href="led_8c_source.html#l00031">LedsInit()</a>, <a class="el" href="examen_8c_source.html#l00061">medicion_task_handle</a>, <a class="el" href="ili9341_8c_source.html#l00019">NULL</a>, <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>, <a class="el" href="uart__mcu_8h_source.html#l00039">serial_config_t::port</a>, <a class="el" href="examen_8c_source.html#l00055">TIEMPO_ACELEROMETRO</a>, <a class="el" href="examen_8c_source.html#l00050">TIEMPO_MEDICION</a>, <a class="el" href="timer__mcu_8h_source.html#l00040">timer_config_t::timer</a>, <a class="el" href="timer__mcu_8h_source.html#l00032">TIMER_A</a>, <a class="el" href="timer__mcu_8h_source.html#l00033">TIMER_B</a>, <a class="el" href="timer__mcu_8c_source.html#l00067">TimerInit()</a>, <a class="el" href="timer__mcu_8c_source.html#l00116">TimerStart()</a>, <a class="el" href="uart__mcu_8h_source.html#l00033">UART_CONNECTOR</a>, <a class="el" href="uart__mcu_8h_source.html#l00032">UART_PC</a> y <a class="el" href="uart__mcu_8c_source.html#l00107">UartInit()</a>.</p>
+
+</div>
+</div>
+<a id="a9637f9f2a674e98e432b00b3ce5a892d" name="a9637f9f2a674e98e432b00b3ce5a892d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9637f9f2a674e98e432b00b3ce5a892d">&#9670;&#160;</a></span>EncenderLed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EncenderLed </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>se prenden los Leds dependiendo la distancia </p>
+<dl class="section return"><dt>Devuelve</dt><dd>0 </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00146">146</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="examen_8c_source.html#l00085">distancia</a>, <a class="el" href="led_8h_source.html#l00034">LED_1</a>, <a class="el" href="led_8h_source.html#l00033">LED_2</a>, <a class="el" href="led_8h_source.html#l00032">LED_3</a> y <a class="el" href="led_8c_source.html#l00046">LedOn()</a>.</p>
+
+</div>
+</div>
+<a id="afaccfed84cd1498a05ea04a65f1209b1" name="afaccfed84cd1498a05ea04a65f1209b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaccfed84cd1498a05ea04a65f1209b1">&#9670;&#160;</a></span>FuncTimerA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FuncTimerA </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función invocada en la interrupción del timer A. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00118">118</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="examen_8c_source.html#l00084">alertar_task_handle</a> y <a class="el" href="examen_8c_source.html#l00061">medicion_task_handle</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a5088c3325764095ca222dc78c328f466" name="a5088c3325764095ca222dc78c328f466"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5088c3325764095ca222dc78c328f466">&#9670;&#160;</a></span>FuncTimerB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FuncTimerB </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función invocada en la interrupción del timer B. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00125">125</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="examen_8c_source.html#l00080">acelerometro_task_handle</a>, <a class="el" href="examen_8c_source.html#l00068">acelerometrox_task_handle</a>, <a class="el" href="examen_8c_source.html#l00072">acelerometroy_task_handle</a> y <a class="el" href="examen_8c_source.html#l00076">acelerometroz_task_handle</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a9758631906abed018de761de5a8e5ea7" name="a9758631906abed018de761de5a8e5ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9758631906abed018de761de5a8e5ea7">&#9670;&#160;</a></span>manejoBuzzer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void manejoBuzzer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>se prenden el buzzer de un tono u otro dependiendo la distancia </p>
+<dl class="section return"><dt>Devuelve</dt><dd>0 </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00164">164</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="buzzer_8c_source.html#l00053">BuzzerOff()</a>, <a class="el" href="buzzer_8c_source.html#l00049">BuzzerOn()</a>, <a class="el" href="buzzer_8c_source.html#l00057">BuzzerSetFrec()</a> y <a class="el" href="examen_8c_source.html#l00085">distancia</a>.</p>
+
+</div>
+</div>
+<a id="ad3a0fca12de57f35397eeca3969f11b5" name="ad3a0fca12de57f35397eeca3969f11b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3a0fca12de57f35397eeca3969f11b5">&#9670;&#160;</a></span>obtenergravedad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void obtenergravedad </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función que obtiene la gravedad a partir de los distintos valores. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00223">223</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="examen_8c_source.html#l00101">gravedad</a>, <a class="el" href="examen_8c_source.html#l00105">gravedadx</a>, <a class="el" href="examen_8c_source.html#l00109">gravedady</a>, <a class="el" href="examen_8c_source.html#l00113">gravedadz</a>, <a class="el" href="uart__mcu_8h_source.html#l00032">UART_PC</a>, <a class="el" href="uart__mcu_8c_source.html#l00193">UartSendString()</a>, <a class="el" href="examen_8c_source.html#l00089">voltajex</a>, <a class="el" href="examen_8c_source.html#l00093">voltajey</a> y <a class="el" href="examen_8c_source.html#l00097">voltajez</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de variables</h2>
+<a id="a3466cd0e43837d57ca5c523cb468f0f2" name="a3466cd0e43837d57ca5c523cb468f0f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3466cd0e43837d57ca5c523cb468f0f2">&#9670;&#160;</a></span>acelerometro_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t acelerometro_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00080">80</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a> y <a class="el" href="examen_8c_source.html#l00125">FuncTimerB()</a>.</p>
+
+</div>
+</div>
+<a id="ab00d82d61bccdf27c74ee8a0b83e371d" name="ab00d82d61bccdf27c74ee8a0b83e371d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab00d82d61bccdf27c74ee8a0b83e371d">&#9670;&#160;</a></span>acelerometrox_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t acelerometrox_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00068">68</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a> y <a class="el" href="examen_8c_source.html#l00125">FuncTimerB()</a>.</p>
+
+</div>
+</div>
+<a id="afad0c92287fea0f10656b04a6356ddb5" name="afad0c92287fea0f10656b04a6356ddb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afad0c92287fea0f10656b04a6356ddb5">&#9670;&#160;</a></span>acelerometroy_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t acelerometroy_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00072">72</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a> y <a class="el" href="examen_8c_source.html#l00125">FuncTimerB()</a>.</p>
+
+</div>
+</div>
+<a id="a286d4b4d924c0ef0b1ad8b8eae887e00" name="a286d4b4d924c0ef0b1ad8b8eae887e00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a286d4b4d924c0ef0b1ad8b8eae887e00">&#9670;&#160;</a></span>acelerometroz_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t acelerometroz_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00076">76</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a> y <a class="el" href="examen_8c_source.html#l00125">FuncTimerB()</a>.</p>
+
+</div>
+</div>
+<a id="a938eaf789fb77c0c81f6f85f7f1919d6" name="a938eaf789fb77c0c81f6f85f7f1919d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a938eaf789fb77c0c81f6f85f7f1919d6">&#9670;&#160;</a></span>alertar_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t alertar_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00084">84</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a> y <a class="el" href="examen_8c_source.html#l00118">FuncTimerA()</a>.</p>
+
+</div>
+</div>
+<a id="aec40b15ff3098bdb2425eb4dc9c11a18" name="aec40b15ff3098bdb2425eb4dc9c11a18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec40b15ff3098bdb2425eb4dc9c11a18">&#9670;&#160;</a></span>distancia</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t distancia = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00085">85</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00182">alertaBlueetoth()</a>, <a class="el" href="examen_8c_source.html#l00146">EncenderLed()</a> y <a class="el" href="examen_8c_source.html#l00164">manejoBuzzer()</a>.</p>
+
+</div>
+</div>
+<a id="a9e3cedafbf8c7bc3773f2810c3e05a34" name="a9e3cedafbf8c7bc3773f2810c3e05a34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e3cedafbf8c7bc3773f2810c3e05a34">&#9670;&#160;</a></span>gravedad</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t gravedad = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00101">101</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>.</p>
+
+</div>
+</div>
+<a id="af396a058cc4330ccd2b1baf7a3016245" name="af396a058cc4330ccd2b1baf7a3016245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af396a058cc4330ccd2b1baf7a3016245">&#9670;&#160;</a></span>gravedadx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t gravedadx = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00105">105</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>.</p>
+
+</div>
+</div>
+<a id="a44b28cac739f778c3909a697fa594e22" name="a44b28cac739f778c3909a697fa594e22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44b28cac739f778c3909a697fa594e22">&#9670;&#160;</a></span>gravedady</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t gravedady = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00109">109</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>.</p>
+
+</div>
+</div>
+<a id="a5751ff9cfea083505574d84215f01cb5" name="a5751ff9cfea083505574d84215f01cb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5751ff9cfea083505574d84215f01cb5">&#9670;&#160;</a></span>gravedadz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t gravedadz = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00113">113</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>.</p>
+
+</div>
+</div>
+<a id="ac49675773e8afdad9d8f3691a8abcf6a" name="ac49675773e8afdad9d8f3691a8abcf6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac49675773e8afdad9d8f3691a8abcf6a">&#9670;&#160;</a></span>medicion_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t medicion_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00061">61</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00250">app_main()</a> y <a class="el" href="examen_8c_source.html#l00118">FuncTimerA()</a>.</p>
+
+</div>
+</div>
+<a id="ad2513c1c455281e77d2b755eeabe48c4" name="ad2513c1c455281e77d2b755eeabe48c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2513c1c455281e77d2b755eeabe48c4">&#9670;&#160;</a></span>voltajex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t voltajex = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00089">89</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>.</p>
+
+</div>
+</div>
+<a id="a6adad3b20c6c7592457a87c2aaf5b726" name="a6adad3b20c6c7592457a87c2aaf5b726"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6adad3b20c6c7592457a87c2aaf5b726">&#9670;&#160;</a></span>voltajey</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t voltajey = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00093">93</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>.</p>
+
+</div>
+</div>
+<a id="af8cabf1598993fa642ad412bf2e66fef" name="af8cabf1598993fa642ad412bf2e66fef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8cabf1598993fa642ad412bf2e66fef">&#9670;&#160;</a></span>voltajez</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t voltajez = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="examen_8c_source.html#l00097">97</a> del archivo <a class="el" href="examen_8c_source.html">examen.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="examen_8c_source.html#l00223">obtenergravedad()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d9edf6c004b4a7ff14fe9ae7a92214ee.html">firmware</a></li><li class="navelem"><a class="el" href="dir_429d80758da54da73083af4edd40d0b3.html">projects</a></li><li class="navelem"><a class="el" href="dir_6f7bc43a8fdbb3280a9928aea340cf00.html">Examen</a></li><li class="navelem"><a class="el" href="dir_0e6b8a0d2bdd0d4c58af67b40e6faedd.html">main</a></li><li class="navelem"><a class="el" href="examen_8c.html">examen.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
+  </ul>
+</div>
+</body>
+</html>
