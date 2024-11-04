@@ -13,6 +13,14 @@
  * |:--------------:|:--------------|
  * | 	ECHO       	| 	GPIO_3		|
  * | 	TRIGGER	 	| 	GPIO_2		|
+ * |    BUZZER      |   GPIO_8      |
+ * |  ACELEROMETRO  |   CH1         |
+ * |  ACELEROMETRO  |   CH2         |
+ * |  ACELEROMETRO  |   CH3         |
+ * |    UART        |   GPIO16      |
+ * |    UART        |   GPIO17      |
+ * |   UART_BT      |   GPIO18      |
+ * |   UART_BT      |   GPIO19      |
  * | 	+5V 	 	| 	+5V   		|
  * | 	GND 	 	| 	GND 		|
  *
@@ -47,7 +55,7 @@
 /** @def TIEMPO_MEDICION
  *  @brief se define el delay para la lectura de la distancia
  */
-#define TIEMPO_MEDICION 50000  //dos por segundos 
+#define TIEMPO_MEDICION 500000  //dos por segundos 
 
 /** @def TIEMPO_ACELEROMETRO
  *  @brief se define el tiempo para obtener datos del acelerometro
@@ -251,7 +259,7 @@ void app_main(void){
 	LedsInit(); //Iniciar Leds
     LcdItsE0803Init();  //Iniciar Pantalla
     HcSr04Init(GPIO_3,GPIO_2); //Inicio Sensor
-	BuzzerInit(GPIO_2); //Inicio de Buzzer
+	BuzzerInit(GPIO_8); //Inicio de Buzzer
 
 	analog_input_config_t conversorADx = {
         .input = CH1,
