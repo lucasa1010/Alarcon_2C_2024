@@ -102,7 +102,8 @@
             "soc_caps.h": "c",
             "mpu6050.h": "c",
             "i2c_mcu.h": "c",
-            "stdio.h": "c"
+            "stdio.h": "c",
+            "buzzer.h": "c"
         },
     },
     "tasks": {

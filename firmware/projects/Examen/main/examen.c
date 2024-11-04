@@ -37,6 +37,8 @@
 #include "lcditse0803.h"
 #include "switch.h"
 #include "timer_mcu.h"
+#include "buzzer.h"
+#include "uart_mcu.h"
 /*==================[macros and definitions]=================================*/
 /** @def TIEMPO_MEDICION
  *  @brief se define el delay para la lectura de la distancia
@@ -90,12 +92,49 @@ void EncenderLed(){
     }
 }
 
+void manejoBuzzer(){  //La alarma sonará con una frecuencia de 1 segundo en el caso de precaución y cada 0.5 segundos en el caso de peligro.
+    if (distancia<300){
+		BuzzerSetFrec(0.5);  //seteo la frecuencia para peligro
+		BuzzerOn(); //enciendo el buzzer
+    }
+    if (distancia>300 && distancia<500){
+		BuzzerSetFrec(1);  //seteo la frecuencia para precaucion
+		BuzzerOn(); //enciendo el buzzer
+    }
+	if (distancia>500){
+		BuzzerOff(); // Apago el buzzer a una distancia segura
+    }
+}
+
+/** @fn UartTask 
+ *  @brief se muestra la lectura por el puerto serie
+ *  @param pvParameter numero que se recibe para mostrar
+ *  @return 0
+ */
+void alertaBlueetoth (void *pvParameter) {
+	if (distancia>300 && distancia<500){ // dependiendo la distancia alerto de una u otra forma
+	UartSendString(UART_CONNECTOR,"Precaución, vehículo cerca");
+	UartSendString(UART_CONNECTOR,"r\n");
+	}
+	if (distancia<300){
+	UartSendString(UART_CONNECTOR,"Peligro, vehículo cerca”");
+	UartSendString(UART_CONNECTOR,"r\n");
+	}  
+}
+
 /*==================[external functions definition]==========================*/
 void app_main(void){
 	LedsInit(); //Iniciar Leds
     LcdItsE0803Init();  //Iniciar Pantalla
     HcSr04Init(GPIO_3,GPIO_2); //Inicio Sensor
-    SwitchesInit(); //Inicio las teclas
+	BuzzerInit(GPIO_2); //Inicio de Buzzer
+
+	    serial_config_t my_uart = {
+    .port = UART_PC,
+    .baud_rate = 9600,
+    .param_p = NULL
+    };
+    UartInit(&my_uart);
 
     /* Inicialización de timers */
     timer_config_t timer_lectura = {
