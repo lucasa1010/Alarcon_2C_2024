@@ -39,11 +39,17 @@
 #include "timer_mcu.h"
 #include "buzzer.h"
 #include "uart_mcu.h"
+#include "analog_io_mcu.h"
 /*==================[macros and definitions]=================================*/
 /** @def TIEMPO_MEDICION
  *  @brief se define el delay para la lectura de la distancia
  */
 #define TIEMPO_MEDICION 50000  //dos por segundos 
+
+/** @def TIEMPO_ACELEROMETRO
+ *  @brief se define el tiempo para obtener datos del acelerometro
+ */
+#define TIEMPO_ACELEROMETRO 10000
 
 /*==================[internal data definition]===============================*/
 /** @def medicion_task_handle
@@ -53,13 +59,30 @@ TaskHandle_t medicion_task_handle = NULL;
 /** @def distancia
  *  @brief se define la distancia obtenida por el sensor
  */
-uint16_t distancia;
+/** @def acelerometro_task_handle
+ *  @brief handle de la tarea asociada al acelerometro
+ */
+TaskHandle_t acelerometro_task_handle = NULL;
+
+uint16_t distancia = 0;
+/** @def voltaje
+ *  @brief es el voltaje asociado a la medicion
+ */
+uint16_t voltaje = 0;
+uint16_t gravedad = 0;
 /*==================[internal functions declaration]=========================*/
 /**
  * @brief Función invocada en la interrupción del timer A
  */
 void FuncTimerA(void* param){
     vTaskNotifyGiveFromISR(medicion_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_1 */
+}
+
+/**
+ * @brief Función invocada en la interrupción del timer B
+ */
+void FuncTimerB(void* param){
+    vTaskNotifyGiveFromISR(acelerometro_task_handle, pdFALSE); 
 }
 
 /** @fn LeerSensor 
@@ -111,7 +134,7 @@ void manejoBuzzer(){  //La alarma sonará con una frecuencia de 1 segundo en el 
  *  @param pvParameter numero que se recibe para mostrar
  *  @return 0
  */
-void alertaBlueetoth (void *pvParameter) {
+void alertaBlueetoth () {
 	if (distancia>300 && distancia<500){ // dependiendo la distancia alerto de una u otra forma
 	UartSendString(UART_CONNECTOR,"Precaución, vehículo cerca");
 	UartSendString(UART_CONNECTOR,"r\n");
@@ -122,6 +145,22 @@ void alertaBlueetoth (void *pvParameter) {
 	}  
 }
 
+/**
+ * @brief Función que convierte datos analogicos a digital
+ * @param pvParameter parametro interno
+ */
+static void ConversionAD(void *pvParameter){
+    while (true){
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);    /* La tarea espera en este punto hasta recibir una notificacion */
+        AnalogInputReadSingle(CH1, &voltaje);  //se lee el voltaje en chanel 1 y se almacena 
+		gravedad = 1.65 + 0.3*voltaje; //obtengo la gravedad medida por el acelerometro
+		if(gravedad>4){
+			UartSendString(UART_PC,"Caída detectada");
+	 		UartSendString(UART_PC,"r\n");
+		}
+    }
+}
+
 /*==================[external functions definition]==========================*/
 void app_main(void){
 	LedsInit(); //Iniciar Leds
@@ -129,12 +168,19 @@ void app_main(void){
     HcSr04Init(GPIO_3,GPIO_2); //Inicio Sensor
 	BuzzerInit(GPIO_2); //Inicio de Buzzer
 
-	    serial_config_t my_uart = {
+	serial_config_t my_uart = {  //Incializo la uart
     .port = UART_PC,
     .baud_rate = 9600,
     .param_p = NULL
     };
     UartInit(&my_uart);
+
+	serial_config_t my_uart_bt = {  //Incializo la uart que se usa para la app
+    .port = UART_CONNECTOR,
+    .baud_rate = 9600,
+    .param_p = NULL
+    };
+    UartInit(&my_uart_bt);
 
     /* Inicialización de timers */
     timer_config_t timer_lectura = {
@@ -145,6 +191,14 @@ void app_main(void){
     };
     TimerInit(&timer_lectura);
 
+	timer_config_t timer_acelerometro = {
+        .timer = TIMER_B,
+        .period = TIEMPO_ACELEROMETRO,
+        .func_p = FuncTimerB,
+        .param_p = NULL
+    };
+    TimerInit(&timer_acelerometro);
+
 
     /* Creación de tareas */
     xTaskCreate(&obtenerDistancia, "obtener Distancia", 2048, NULL, 5, &medicion_task_handle);
@@ -152,7 +206,6 @@ void app_main(void){
   
     /* Inicialización del conteo de timers */
     TimerStart(timer_lectura.timer);
-
-
+	TimerStart(timer_acelerometro.timer);
 }
 /*==================[end of file]============================================*/
