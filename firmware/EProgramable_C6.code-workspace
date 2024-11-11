@@ -47,6 +47,9 @@
         },
         {
             "path": "projects/Examen"
+        },
+        {
+            "path": "projects/recuperatorio"
         }
     ],
     "settings": {
