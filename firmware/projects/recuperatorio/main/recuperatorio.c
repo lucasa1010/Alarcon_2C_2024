@@ -48,6 +48,8 @@
 #define TIEMPO_INFORMAR 250000 // informo al usuario cada 50 muestras
 
 #define TIEMPO_BALANZA 5000       // 200 muestras por segundo
+
+#define GPIO_PUERTA GPIO_22     // LED de aviso de sensado IR
 /*==================[internal data definition]===============================*/
 /** @def lectura_task_handle
  *  @brief handle de la tarea asociada a la lectura de la medicion
@@ -77,6 +79,7 @@ uint16_t peso_traseroV=0;
 uint32_t peso_delantero_total = 0;
 uint32_t peso_trasero_total = 0;
 uint16_t peso_total = 0;
+
 /*==================[internal functions declaration]=========================*/
 /**
  * @brief Función invocada en la interrupción del timer A
@@ -156,13 +159,35 @@ static void informar_operario(void* param){
 	UartSendString(UART_PC, "\r\n"); //marcar el final de la transmision.
 	peso_delantero_total = 0; //reinicio los acumuladores
 	peso_trasero_total = 0;
-
 }
+
+/** @fn FuncUart 
+ *  @brief se leen las teclas pulsadas
+ *  @param param lugar donde se almacena la informacion leida
+ *  @return 0
+ */
+static void FuncUart(void *param){
+    uint8_t character;
+    UartReadByte(UART_PC, &character);
+    if(character=='O'){
+        GPIOOn(GPIO_PUERTA);
+    }
+    if(character=='C'){
+        GPIOOff(GPIO_PUERTA);
+    }
+    if(character=='o'){
+        GPIOOn(GPIO_PUERTA);
+    }
+    if(character=='c'){
+        GPIOOff(GPIO_PUERTA);
+    }
+} 
 
 /*==================[external functions definition]==========================*/
 void app_main(void){
 	LedsInit(); //Iniciar Leds
     HcSr04Init(GPIO_3,GPIO_2); //Inicio Sensor
+	GPIOInit(GPIO_PUERTA, GPIO_OUTPUT);
 
 	/* Inicialización de timers */
     timer_config_t timer_lectura = {
@@ -205,6 +230,7 @@ void app_main(void){
 		serial_config_t my_uart = {  //Incializo la uart
     .port = UART_PC,
     .baud_rate = 9600,
+	.func_p = FuncUart,
     .param_p = NULL
     };
     UartInit(&my_uart);
